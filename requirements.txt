@@ -1,0 +1,4 @@
+Flask~=2.0.0
+mido~=1.2.10
+serial~=0.0.97
+pyserial~=3.5

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<div id="table" class="show_table">
+    <table style="width:100%">
+        <tr>
+            <th>Název písně</th>
+        </tr>
+        {% for song_name in songs %}
+            <tr>
+                <td><a onclick="playSong('{{ url_for(request.endpoint) }}song/{{ song_name }}')" style="cursor: pointer">{{ song_name }}</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div id="waiting" class="hidden">
+    <h1>Se to přehrává</h1>
+</div>
+</body>
+</html>
+<style>
+    .hidden {
+        display: none;
+    }
+
+    .show_table {
+        display: table;
+    }
+
+    .show_waiting {
+        display: block;
+    }
+</style>
+<script type="text/javascript">
+    function showWaiting() {
+        document.getElementById("table").className = "hidden";
+        document.getElementById("waiting").className = "show_waiting";
+    }
+
+    function showTable() {
+        document.getElementById("table").className = 'show_table';
+        document.getElementById("waiting").className = 'hidden';
+    }
+    //href="{{ url_for(request.endpoint) }}song/{{ song_name }}"
+    function playSong(song_path) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                showTable();
+            }
+            else if (this.status == 404 && this.readyState == 4) {
+                showTable();
+                alert("Byl zadán chybný název souboru.");
+            }
+        };
+        xhttp.open("GET", song_path, true);
+        xhttp.send();
+        showWaiting();
+    }
+
+
+</script>
