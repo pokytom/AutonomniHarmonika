@@ -42,4 +42,5 @@ def lookup(i):
 		67: b'C',
 		69: b'D'
 	}
+	#tomas neumi python
 	return switcher.get(i,0)
