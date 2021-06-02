@@ -38,4 +38,4 @@ def lookup(i):
 		71: b'G',
 		72: b'H'
 	}
-	return switcher.get(i,"Chybna nota")
+	return switcher.get(i,0)
