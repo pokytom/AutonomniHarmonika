@@ -12,15 +12,30 @@ def play_song(file):
 		return False
 	for msg in MidiFile(file_path).play():
 		val = msg.dict()
-		output = tuple(val.items())[3][1]
+		note = tuple(val.items())[3][1]
+		output_ser = lookup(note)
+		ser.write(output_ser)
 		#print(output) #int 69
 		#output_str = f'{output}'
 		#print(output_str) #string 69 - please enode to bytes
-		output_chr = chr(output)
+		#output_chr = chr(output)
 		#print(output_chr) #string E
-		output_ser = ser.write(output.encode('UTF-8'))
+		#output_ser = ser.write(output.encode('UTF-8'))
 		print(output_ser)
-		f.write(bin(output_ser))
+		#f.write(bin(output_ser))
 	ser.close()
 	f.close()
 	return True
+
+def lookup(i):
+	switcher={
+		65: b'A',
+		66: b'B',
+		67: b'C',
+		68: b'D',
+		69: b'E',
+		70: b'F',
+		71: b'G',
+		72: b'H'
+	}
+	return switcher.get(i,"Chybna nota")
