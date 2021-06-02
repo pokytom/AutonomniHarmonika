@@ -15,9 +15,9 @@ def play_song(file):
 		output = tuple(val.items())[3][1]
 		#output_str = f'{output}'
 		output_chr = chr(output)
-		ser.write(str.encode(output_chr))
-		print(output_chr)
-		f.write(output_chr)
+		output_ser = ser.write(str.encode(output_chr))
+		print(output_ser)
+		f.write(output_ser)
 	ser.close()
 	f.close()
 	return True
