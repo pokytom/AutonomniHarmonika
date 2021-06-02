@@ -12,9 +12,10 @@ def play_song(file):
 		return False
 	for msg in MidiFile(file_path).play():
 		val = msg.dict()
-		output = ser.write((tuple(val.items())[3][1]))
+		output = tuple(val.items())[3][1]
 		#output_str = f'{output}'
 		output_chr = chr(output)
+		ser.write(output.chr)
 		print(output_chr)
 		f.write(output_chr)
 	ser.close()
