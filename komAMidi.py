@@ -13,7 +13,7 @@ def play_song(file):
 	for msg in MidiFile(file_path).play():
 		val = msg.dict()
 		output = ser.write((tuple(val.items())[3][1]))
-		output_str = output'{num}'
+		output_str = f'{output}'
 		print(output_str)
 		f.write(output_str)
 	ser.close()
