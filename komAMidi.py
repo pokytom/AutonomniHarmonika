@@ -14,11 +14,11 @@ def play_song(file):
 		val = msg.dict()
 		output = tuple(val.items())[3][1]
 		#print(output) #int 69
-		output_str = f'{output}'
-		#print(output_str) #string 69
-		#output_chr = chr(output)
+		#output_str = f'{output}'
+		#print(output_str) #string 69 - please enode to bytes
+		output_chr = chr(output)
 		#print(output_chr) #string E
-		output_ser = ser.write(output_str)
+		output_ser = ser.write(output_chr)
 		print(output_ser)
 		f.write(output_ser)
 	ser.close()
