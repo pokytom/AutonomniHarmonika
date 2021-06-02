@@ -21,7 +21,7 @@ def play_song(file):
 		#output_chr = chr(output)
 		#print(output_chr) #string E
 		#output_ser = ser.write(output.encode('UTF-8'))
-		print(output_ser)
+		print(note)
 		#f.write(bin(output_ser))
 	ser.close()
 	f.close()
