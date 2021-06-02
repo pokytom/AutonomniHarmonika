@@ -18,7 +18,7 @@ def play_song(file):
 		#print(output_str) #string 69 - please enode to bytes
 		output_chr = chr(output)
 		#print(output_chr) #string E
-		output_ser = ser.write(output_chr.encode())
+		output_ser = ser.write(output.encode())
 		print(output_ser)
 		f.write(chr(output_ser))
 	ser.close()
