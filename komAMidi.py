@@ -20,7 +20,7 @@ def play_song(file):
 		#print(output_chr) #string E
 		output_ser = ser.write(output)
 		print(output_ser)
-		f.write(chr(output_ser))
+		f.write(bin(output_ser))
 	ser.close()
 	f.close()
 	return True
