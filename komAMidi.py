@@ -12,6 +12,6 @@ def play_song(file):
 	for msg in MidiFile(file_path).play():
 		val = msg.dict()
 		output = ser.write((tuple(val.items())[3][1]))
-		#print(tuple(val.items())[3][1])
+		print(output)
 	ser.close()
 	return True
