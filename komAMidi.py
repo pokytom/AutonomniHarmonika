@@ -21,7 +21,7 @@ def play_song(file):
 		#output_chr = chr(output)
 		#print(output_chr) #string E
 		#output_ser = ser.write(output.encode('UTF-8'))
-		print(note)
+		print(output_ser)
 		#f.write(bin(output_ser))
 	ser.close()
 	f.close()
@@ -29,13 +29,13 @@ def play_song(file):
 
 def lookup(i):
 	switcher={
-		60: b'A',
-		61: b'B',
-		62: b'C',
-		63: b'D',
-		65: b'E',
-		66: b'F',
-		67: b'G',
-		69: b'H'
+		60: b'<',
+		61: b'=',
+		62: b'>',
+		63: b'?',
+		65: b'A',
+		66: b'B',
+		67: b'C',
+		69: b'D'
 	}
 	return switcher.get(i,0)
