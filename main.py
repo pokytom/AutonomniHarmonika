@@ -6,8 +6,6 @@ SONG_FOLDR = 'songs/'
 
 app = Flask(__name__)
 
-
-
 @app.route("/", methods=['GET', 'POST'])
 def home():
     songy = ['prvni', 'druhy', 'treti']
@@ -29,7 +27,6 @@ def show_post(song_name):
 
 @app.route("/admin")
 def admin(): return render_template('admin.html')
-
 
 # proto jde 'python Flask_blog.py'
 if __name__ == '__main__':

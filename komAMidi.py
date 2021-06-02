@@ -28,11 +28,15 @@ def play_song(file):
 	return True
 
 def lookup(i):
+	"""
 	switcher={
 		53: b'5',
 		54: b'6',
 		55: b'7',
 		56: b'8',
+		57: b'9',
+		58: b':',
+		59: b';',
 		60: b'<',
 		61: b'=',
 		62: b'>',
@@ -40,7 +44,14 @@ def lookup(i):
 		65: b'A',
 		66: b'B',
 		67: b'C',
-		69: b'D'
+		69: b'D',
+		70: b'E',
+		71: b'F',
+		72: b'G',
+		73: b'H',
+		74: b'I',
+		75: b'J'
 	}
-	#tomas neumi python
-	return switcher.get(i,0)
+	"""
+	return i.to_bytes(1, 'big')#switcher.get(i,0)
+
