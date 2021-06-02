@@ -4,6 +4,7 @@ from os import path
 
 
 def play_song(file):
+	f = open("komunikaceFile.txt", "w")
 	ser = serial.Serial('/dev/ttyUSB0',9600)
 	print(ser.name, ser.baudrate)
 	file_path = '{}{}'.format('./songs/', file)
@@ -13,5 +14,7 @@ def play_song(file):
 		val = msg.dict()
 		output = ser.write((tuple(val.items())[3][1]))
 		print(output)
+		f.write(output)
 	ser.close()
+	f.close()
 	return True
