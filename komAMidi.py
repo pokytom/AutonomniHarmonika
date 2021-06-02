@@ -29,6 +29,10 @@ def play_song(file):
 
 def lookup(i):
 	switcher={
+		53: b'5',
+		54: b'6',
+		55: b'7',
+		56: b'8',
 		60: b'<',
 		61: b'=',
 		62: b'>',
