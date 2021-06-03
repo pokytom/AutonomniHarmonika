@@ -26,4 +26,3 @@ def play_song(file):
 
 def lookup(i):
 	return i.to_bytes(1, 'big')#switcher.get(i,0)
-
