@@ -1,9 +1,12 @@
 from mido import MidiFile
 import serial
+import pigpio
 from os import path
 
 
 def play_song(file):
+	pi = pigpio.pi()
+	pi.set_PWM_dutycycle(12,0.05)
 	f = open("komunikaceFile.txt", "w")
 	ser = serial.Serial('/dev/ttyUSB0',9600)
 	print(ser.name, ser.baudrate)
@@ -15,16 +18,10 @@ def play_song(file):
 		note = tuple(val.items())[3][1]
 		output_ser = lookup(note)
 		ser.write(output_ser)
-		#print(output) #int 69
-		#output_str = f'{output}'
-		#print(output_str) #string 69 - please enode to bytes
-		#output_chr = chr(output)
-		#print(output_chr) #string E
-		#output_ser = ser.write(output.encode('UTF-8'))
 		print(output_ser)
-		#f.write(bin(output_ser))
 	ser.close()
 	f.close()
+	pi.set_PWM_dutycycle(12, 0)
 	return True
 
 def lookup(i):
