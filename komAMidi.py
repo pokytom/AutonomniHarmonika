@@ -21,7 +21,7 @@ def play_song(file):
 		print(output_ser)
 	ser.close()
 	f.close()
-	pi.set_PWM_dutycycle(12, 0)
+	pi.set_PWM_dutycycle(13, 0)
 	return True
 
 def lookup(i):
