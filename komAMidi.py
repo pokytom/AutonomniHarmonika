@@ -6,7 +6,7 @@ from os import path
 
 def play_song(file):
 	pi = pigpio.pi()
-	pi.set_PWM_dutycycle(12,6)
+	pi.set_PWM_dutycycle(13,6)
 	f = open("komunikaceFile.txt", "w")
 	ser = serial.Serial('/dev/ttyUSB0',9600)
 	print(ser.name, ser.baudrate)
