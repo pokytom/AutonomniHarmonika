@@ -1,10 +1,31 @@
-from flask import Flask, render_template, request, url_for, abort
+import os.path
+
+from flask import Flask, render_template, request, url_for, abort, send_from_directory
 from os import walk
 from komAMidi import play_song
 
 SONG_FOLDR = 'songs/'
 
 app = Flask(__name__)
+
+@app.route("/stop-playing", methods=['GET', 'POST'])
+def stop_playing():
+    print("stop playing")
+    return render_template('200.html')
+
+@app.route("/play-notes/<int:note_number>", methods=['GET', 'Post'])
+def playing_note(note_number):
+    print(note_number)
+    #tu si pridej to pousteni
+    return render_template('200.html')
+
+@app.route("/play-notes", methods=['GET', 'Post'])
+def play_notes():
+    return render_template('notes_play.html')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'templates'), 'favicon.ico')
 
 @app.route("/", methods=['GET', 'POST'])
 def home():

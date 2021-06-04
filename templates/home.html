@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html lang="cz">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
+{% extends 'main.html' %}
+{% block head %}
+<title>Home</title>
+{% endblock %}
+
+{% block content %}
+
+
+
 <body>
 <div id="table" class="show_table">
     <table style="width:100%">
@@ -21,7 +24,7 @@
     <h1>Se to přehrává</h1>
 </div>
 </body>
-</html>
+
 <style>
     .hidden {
         display: none;
@@ -64,3 +67,4 @@
 
 
 </script>
+{% endblock %}

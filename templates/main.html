@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="cz">
+<head>
+    <meta charset="UTF-8">
+    {% block head %}
+    {% endblock %}
+</head>
+<div class="topnav">
+    <a href="/">Skladby</a>
+    <a href="/play-notes">Noty</a>
+</div>
+
+<link rel="shortcut icon" href="favicon.ico">
+{% block content %}
+{% endblock %}
+</html>
+<style type="text/css">
+    .topnav {
+        background-color: #333;
+        overflow: hidden;
+    }
+
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+    }
+</style>
+<script type="text/javascript">
+    var xhttp_stop = new XMLHttpRequest();
+    xhttp_stop.onreadystatechange = function () {
+        if (this.status == 404 && this.readyState == 4) {
+            alert("Interní chyba");
+        }
+    };
+    xhttp_stop.open("GET", "{{ request.url_root }}stop-playing", true);
+    xhttp_stop.send();
+</script>

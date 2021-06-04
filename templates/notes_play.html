@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% block head %}
+    <title>Hraní not</title>
+{% endblock %}
+{% block content %}
+    <body>
+    <table>
+        <tr>
+            {% for i in range(53, 85) %}
+                <th id="note-{{ i }}" class="noteDeactive" onclick="noteClick({{ i }})"
+                    style="cursor: pointer">{{ i|string }}</th>
+            {% endfor %}
+        </tr>
+    </table>
+    </body>
+    <script type="text/javascript">
+
+        function noteClick(id) {
+            let field = document.getElementById("note-" + id);
+            if (field.className == "noteActive") {
+                field.className = "noteDeactive";
+            } else if (field.className == "noteDeactive") {
+                field.className = "noteActive";
+            }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.status == 404 && this.readyState == 4) {
+                    alert("Interní chyba");
+                }
+            };
+            let url_note = "{{ url_for(request.endpoint) }}/" + id;
+            xhttp.open("GET", url_note, true);
+            xhttp.send();
+        }
+    </script>
+    <style type="text/css">
+        .noteDeactive {
+            background-color: rgba(255, 0, 0, 0.2);
+        }
+
+        .noteActive {
+            background: rgba(0, 255, 0, 0.2);
+        }
+    </style>
+{% endblock %}
