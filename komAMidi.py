@@ -5,6 +5,8 @@ from os import path
 
 
 def play_song(file):
+	# metoda pro prehrani pisne
+
 	"""
 	pi = pigpio.pi()
 	pi.set_PWM_dutycycle(13,6)
@@ -30,11 +32,40 @@ def play_song(file):
 	return True
 
 def play_note(note_number):
-	#zapunou/vypnout notu
-	ser = serial.Serial('/dev/ttyUSB0', 9600)
+	# metoda pro zapnuti/vypnuti noty
+	#ser = serial.Serial('/dev/ttyUSB0', 9600)
+	#print(ser.name, ser.baudrate)
+
 	output = lookup(note_number)
-	ser.write(output)
-	ser.close()
+	#ser.write(output)
+	print(output)
+
+	#ser.close()
+	return True
+
+def reset():
+	# metoda pro nulovani vystupu a vypnuti vzduchu
+	#ser = serial.Serial('/dev/ttyUSB0', 9600)
+	#print(ser.name, ser.baudrate)
+
+	#pi = pigpio.pi()
+	#pi.set_PWM_dutycycle(13, 0)
+	print("vzduch vypnut")
+
+	output = b'r'
+	#ser.write(output)
+	print(output)
+
+	#ser.close()
+	return True
+
+def air_on():
+	# metoda pro zapnuti vzduchu
+
+	# pi = pigpio.pi()
+	# pi.set_PWM_dutycycle(13, 0)
+	print("vzduch zapnut")
+
 	return True
 
 def lookup(i):

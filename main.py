@@ -1,8 +1,7 @@
 import os.path
-
 from flask import Flask, render_template, request, url_for, abort, send_from_directory
 from os import walk
-from komAMidi import play_song
+from komAMidi import play_song, play_note, reset, air_on
 
 SONG_FOLDR = 'songs/'
 
@@ -11,21 +10,23 @@ app = Flask(__name__)
 @app.route("/stop-playing", methods=['GET', 'POST'])
 def stop_playing():
     print("stop playing")
+    reset()
     return render_template('200.html')
 
 @app.route("/start-playing", methods=['GET', 'POST'])
 def start_playing():
-    print("start playing")
+    air_on()
     return render_template('200.html')
 
 @app.route("/play-notes/<int:note_number>", methods=['GET', 'Post'])
 def playing_note(note_number):
-    print(note_number)
-    #tu si pridej to pousteni
+    # metoda pro stisk klavesy
+    play_note(note_number)
     return render_template('200.html')
 
 @app.route("/play-notes", methods=['GET', 'Post'])
 def play_notes():
+    # prepne na stranku s klavesama
     return render_template('notes_play.html')
 
 @app.route('/favicon.ico')
@@ -42,7 +43,7 @@ def home():
         if f[i][-3:] != 'mid':
             f.pop(i)
     return render_template('home.html',
-                           nadpis="sunrise", songs=f)
+                           songs=f)
 
 @app.route('/song/<string:song_name>', methods=['GET', 'POST'])
 def show_post(song_name):
@@ -54,6 +55,5 @@ def show_post(song_name):
 @app.route("/admin")
 def admin(): return render_template('admin.html')
 
-# proto jde 'python Flask_blog.py'
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
