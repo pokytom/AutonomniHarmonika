@@ -13,6 +13,12 @@ def stop_playing():
     reset()
     return render_template('200.html')
 
+@app.route("/start-air", methods=['GET', 'POST'])
+def start_air():
+    print("start air")
+    air_on()
+    return render_template('200.html')
+
 @app.route("/start-playing", methods=['GET', 'POST'])
 def start_playing():
     air_on()
@@ -21,13 +27,20 @@ def start_playing():
 @app.route("/play-notes/<int:note_number>", methods=['GET', 'Post'])
 def playing_note(note_number):
     # metoda pro stisk klavesy
+    print("nota:  "+str(note_number))
     play_note(note_number)
     return render_template('200.html')
 
 @app.route("/play-notes", methods=['GET', 'Post'])
 def play_notes():
+    #TODO: sem napsat ty noty
+    notes = {50: "a",
+             51: "b",
+             52: "c",
+             53: "d",
+             54: "e"}
     # prepne na stranku s klavesama
-    return render_template('notes_play.html')
+    return render_template('notes_play.html', notes=notes)
 
 @app.route('/favicon.ico')
 def favicon():

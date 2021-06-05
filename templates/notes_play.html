@@ -6,9 +6,9 @@
     <body>
     <table>
         <tr>
-            {% for i in range(53, 85) %}
-                <th id="note-{{ i }}" class="noteDeactive" onclick="noteClick({{ i }})"
-                    style="cursor: pointer">{{ i|string }}</th>
+            {% for key, value in notes.items() %}
+                <th id="note-{{ key }}" class="noteDeactive" onclick="noteClick({{ key }})"
+                    style="cursor: pointer">{{ value }}</th>
             {% endfor %}
         </tr>
     </table>

@@ -13,6 +13,10 @@
 <link rel="shortcut icon" href="favicon.ico">
 {% block content %}
 {% endblock %}
+<div>
+    <input type="button" value="Zastavit přehrávání a vzduch" onclick="stopPlaying()">
+    <input type="button" value="Zapni vzduch" onclick="startAir()">
+</div>
 </html>
 <style type="text/css">
     .topnav {
@@ -35,12 +39,34 @@
     }
 </style>
 <script type="text/javascript">
-    var xhttp_stop = new XMLHttpRequest();
-    xhttp_stop.onreadystatechange = function () {
-        if (this.status == 404 && this.readyState == 4) {
-            alert("Interní chyba");
+    function startAir() {
+        var xhttp_stop = new XMLHttpRequest();
+        xhttp_stop.onreadystatechange = function () {
+            if (this.status == 404 && this.readyState == 4) {
+                alert("Interní chyba");
+            }
+        };
+        xhttp_stop.open("GET", "{{ request.url_root }}start-air", true);
+        xhttp_stop.send();
+    }
+
+    function stopPlaying() {
+        var xhttp_stop = new XMLHttpRequest();
+        xhttp_stop.onreadystatechange = function () {
+            if (this.status == 404 && this.readyState == 4) {
+                alert("Interní chyba");
+            }
+        };
+        xhttp_stop.open("GET", "{{ request.url_root }}stop-playing", true);
+        xhttp_stop.send();
+        var notes = document.getElementsByClassName("noteActive");
+        if (notes.length > 0) {
+            for (var i = notes.length; i > 0; i--) {
+                notes[0].className = "noteDeactive";
+            }
         }
-    };
-    xhttp_stop.open("GET", "{{ request.url_root }}stop-playing", true);
-    xhttp_stop.send();
+    }
+
+    stopPlaying();
+
 </script>
