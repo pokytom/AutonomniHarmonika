@@ -2,12 +2,13 @@ from mido import MidiFile
 import serial
 import pigpio
 from os import path
-from .main import PLAYING_SONG
 
+PLAYING_SONG = False
 
 def play_song(file):
 	# metoda pro prehrani pisne
-
+	global PLAYING_SONG
+	PLAYING_SONG = True
 	pi = pigpio.pi()
 	pi.set_PWM_dutycycle(13,6)
 	f = open("komunikaceFile.txt", "w")
@@ -48,6 +49,8 @@ def play_note(note_number):
 	return True
 
 def reset():
+	global PLAYING_SONG
+	PLAYING_SONG = False
 	# metoda pro nulovani vystupu a vypnuti vzduchu
 	ser = serial.Serial('/dev/ttyUSB0', 9600)
 	print(ser.name, ser.baudrate)
