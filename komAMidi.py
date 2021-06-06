@@ -9,16 +9,16 @@ def play_song(file):
 	# metoda pro prehrani pisne
 	global PLAYING_SONG
 	PLAYING_SONG = True
-	#pi = pigpio.pi()
-	#pi.set_PWM_dutycycle(13,6)
+	pi = pigpio.pi()
+	pi.set_PWM_dutycycle(13,6)
 	f = open("komunikaceFile.txt", "w")
-	#ser = serial.Serial('/dev/ttyUSB0',9600)
-	#print(ser.name, ser.baudrate)
+	ser = serial.Serial('/dev/ttyUSB0',9600)
+	print(ser.name, ser.baudrate)
 	file_path = '{}{}'.format('./songs/', file)
 	if file[-3:] != 'mid' or not path.exists(file_path):
 		f.close()
-		#ser.close
-		#pi.set_PWM_dutycycle(13, 0)
+		ser.close
+		pi.set_PWM_dutycycle(13, 0)
 		return False
 	for msg in MidiFile(file_path).play():
 		if PLAYING_SONG:
@@ -26,13 +26,13 @@ def play_song(file):
 			if tuple(val.items())[0][1] != 'program_change' and tuple(val.items())[0][1] != 'control_change':
 				note = tuple(val.items())[3][1]
 				output_ser = lookup(note)
-				#ser.write(output_ser)
+				ser.write(output_ser)
 				print(output_ser)
 		else:
 			break
-	#ser.close()
+	ser.close()
 	f.close()
-	#pi.set_PWM_dutycycle(13, 0)
+	pi.set_PWM_dutycycle(13, 0)
 	PLAYING_SONG = False
 
 	return True
