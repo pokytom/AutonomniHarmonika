@@ -2,6 +2,7 @@ from mido import MidiFile
 import serial
 import pigpio
 from os import path
+from .main import PLAYING_SONG
 
 
 def play_song(file):
@@ -19,14 +20,18 @@ def play_song(file):
 		pi.set_PWM_dutycycle(13, 0)
 		return False
 	for msg in MidiFile(file_path).play():
-		val = msg.dict()
-		note = tuple(val.items())[3][1]
-		output_ser = lookup(note)
-		ser.write(output_ser)
-		print(output_ser)
+		if PLAYING_SONG:
+			val = msg.dict()
+			note = tuple(val.items())[3][1]
+			output_ser = lookup(note)
+			ser.write(output_ser)
+			print(output_ser)
+		else:
+			break
 	ser.close()
 	f.close()
 	pi.set_PWM_dutycycle(13, 0)
+	PLAYING_SONG = False
 
 	return True
 

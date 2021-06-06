@@ -7,9 +7,12 @@ SONG_FOLDR = 'songs/'
 
 app = Flask(__name__)
 
+PLAYING_SONG = False
+
 @app.route("/stop-playing", methods=['GET', 'POST'])
 def stop_playing():
     print("stop playing")
+    PLAYING_SONG = False
     reset()
     return render_template('200.html')
 
@@ -88,6 +91,7 @@ def home():
 @app.route('/song/<string:song_name>', methods=['GET', 'POST'])
 def show_post(song_name):
     msg = ''
+    PLAYING_SONG = True
     if not play_song(song_name):
         abort(404)
     return render_template('200.html')
