@@ -23,10 +23,11 @@ def play_song(file):
 	for msg in MidiFile(file_path).play():
 		if PLAYING_SONG:
 			val = msg.dict()
-			note = tuple(val.items())[3][1]
-			output_ser = lookup(note)
-			ser.write(output_ser)
-			print(output_ser)
+			if tuple(val.items())[1][1] != "program_change":
+				note = tuple(val.items())[3][1]
+				output_ser = lookup(note)
+				ser.write(output_ser)
+				print(output_ser)
 		else:
 			break
 	ser.close()
