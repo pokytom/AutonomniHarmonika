@@ -33,12 +33,38 @@ def playing_note(note_number):
 
 @app.route("/play-notes", methods=['GET', 'Post'])
 def play_notes():
-    #TODO: sem napsat ty noty
-    notes = {50: "a",
-             51: "b",
-             52: "c",
-             53: "d",
-             54: "e"}
+    notes = {53: "f",
+             54: "f#",
+             55: "g",
+             56: "g#",
+             57: "a",
+             58: "a#",
+             59: "h",
+             60: "C1",
+             61: "C#1",
+             62: "D1",
+             63: "D#1",
+             64: "E1",
+             65: "F1",
+             66: "F#1",
+             67: "G1",
+             68: "G#1",
+             69: "A1",
+             70: "A#1",
+             71: "H1",
+             72: "C2",
+             73: "C#2",
+             74: "D2",
+             75: "D#2",
+             76: "E2",
+             77: "F2",
+             78: "F#2",
+             79: "G2",
+             80: "G#2",
+             81: "A2",
+             82: "A#2",
+             83: "H2",
+             84: "C3"}
     # prepne na stranku s klavesama
     return render_template('notes_play.html', notes=notes)
 

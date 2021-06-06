@@ -1,13 +1,12 @@
 from mido import MidiFile
 import serial
-#import pigpio
+import pigpio
 from os import path
 
 
 def play_song(file):
 	# metoda pro prehrani pisne
 
-	"""
 	pi = pigpio.pi()
 	pi.set_PWM_dutycycle(13,6)
 	f = open("komunikaceFile.txt", "w")
@@ -16,7 +15,7 @@ def play_song(file):
 	file_path = '{}{}'.format('./songs/', file)
 	if file[-3:] != 'mid' or not path.exists(file_path):
 		f.close()
-		s.close
+		ser.close
 		pi.set_PWM_dutycycle(13, 0)
 		return False
 	for msg in MidiFile(file_path).play():
@@ -28,42 +27,42 @@ def play_song(file):
 	ser.close()
 	f.close()
 	pi.set_PWM_dutycycle(13, 0)
-	"""
+
 	return True
 
 def play_note(note_number):
 	# metoda pro zapnuti/vypnuti noty
-	#ser = serial.Serial('/dev/ttyUSB0', 9600)
-	#print(ser.name, ser.baudrate)
+	ser = serial.Serial('/dev/ttyUSB0', 9600)
+	print(ser.name, ser.baudrate)
 
 	output = lookup(note_number)
-	#ser.write(output)
+	ser.write(output)
 	print(output)
 
-	#ser.close()
+	ser.close()
 	return True
 
 def reset():
 	# metoda pro nulovani vystupu a vypnuti vzduchu
-	#ser = serial.Serial('/dev/ttyUSB0', 9600)
-	#print(ser.name, ser.baudrate)
+	ser = serial.Serial('/dev/ttyUSB0', 9600)
+	print(ser.name, ser.baudrate)
 
-	#pi = pigpio.pi()
-	#pi.set_PWM_dutycycle(13, 0)
+	pi = pigpio.pi()
+	pi.set_PWM_dutycycle(13, 0)
 	print("vzduch vypnut")
 
 	output = b'r'
-	#ser.write(output)
+	ser.write(output)
 	print(output)
 
-	#ser.close()
+	ser.close()
 	return True
 
 def air_on():
 	# metoda pro zapnuti vzduchu
 
-	# pi = pigpio.pi()
-	# pi.set_PWM_dutycycle(13, 0)
+	pi = pigpio.pi()
+	pi.set_PWM_dutycycle(13, 6)
 	print("vzduch zapnut")
 
 	return True
