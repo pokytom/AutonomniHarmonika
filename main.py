@@ -18,11 +18,12 @@ def start_air():
     print("start air")
     air_on()
     return render_template('200.html')
-
+"""
 @app.route("/start-playing", methods=['GET', 'POST'])
 def start_playing():
     air_on()
     return render_template('200.html')
+"""
 
 @app.route("/play-notes/<int:note_number>", methods=['GET', 'Post'])
 def playing_note(note_number):
