@@ -12,7 +12,7 @@ def play_song(file):
 	global PLAYING_SONG
 	PLAYING_SONG = True
 	pi = pigpio.pi()
-	pi.set_PWM_dutycycle(13,6)
+	pi.set_PWM_dutycycle(13,WIND_POWER)
 	f = open("komunikaceFile.txt", "w")
 	ser = serial.Serial('/dev/ttyUSB0',9600)
 	print(ser.name, ser.baudrate)
@@ -52,8 +52,6 @@ def play_note(note_number):
 	return True
 
 def reset():
-	global WIND_POWER
-	WIND_POWER = 0
 	global PLAYING_SONG
 	PLAYING_SONG = False
 	# metoda pro nulovani vystupu a vypnuti vzduchu
@@ -75,8 +73,8 @@ def air_on():
 	# metoda pro zapnuti vzduchu
 
 	pi = pigpio.pi()
-	pi.set_PWM_dutycycle(13, 6)
-	print("vzduch zapnut")
+	pi.set_PWM_dutycycle(13, WIND_POWER)
+	print("vzduch zapnut, hlasitost:", WIND_POWER)
 
 	return True
 
