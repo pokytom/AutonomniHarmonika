@@ -17,6 +17,29 @@
     <input type="button" value="Zastavit přehrávání a vzduch" onclick="stopPlaying()">
     <input type="button" value="Zapni vzduch" onclick="startAir()">
 </div>
+<div>
+    <h1>Síla vzduchu</h1>
+    <div>
+        <input type="radio" id="wind2" name="wind_power" value="2" onclick="setAirPower(this.value)">
+        <label for="wind2">2</label><br>
+        <input type="radio" id="wind3" name="wind_power" value="3" onclick="setAirPower(this.value)">
+        <label for="wind3">3</label><br>
+        <input type="radio" id="wind4" name="wind_power" value="4" onclick="setAirPower(this.value)">
+        <label for="wind4">4</label><br>
+        <input type="radio" id="wind5" name="wind_power" value="5" onclick="setAirPower(this.value)">
+        <label for="wind5">5</label><br>
+        <input type="radio" id="wind6" name="wind_power" value="6" onclick="setAirPower(this.value)">
+        <label for="wind6">6</label><br>
+        <input type="radio" id="wind7" name="wind_power" value="7" onclick="setAirPower(this.value)">
+        <label for="wind7">7</label><br>
+        <input type="radio" id="wind8" name="wind_power" value="8" onclick="setAirPower(this.value)">
+        <label for="wind8">8</label><br>
+        <input type="radio" id="wind9" name="wind_power" value="9" onclick="setAirPower(this.value)">
+        <label for="wind9">9</label><br>
+        <input type="radio" id="wind10" name="wind_power" value="10" onclick="setAirPower(this.value)">
+        <label for="wind10">10</label>
+    </div>
+</div>
 </html>
 <style type="text/css">
     .topnav {
@@ -67,6 +90,26 @@
         }
     }
 
-    stopPlaying();
+    function setAirPower(power) {
+                var xhttp_stop = new XMLHttpRequest();
+        xhttp_stop.onreadystatechange = function () {
+            if (this.status == 404 && this.readyState == 4) {
+                alert("Interní chyba");
+            }
+        };
+        let url_address = "{{ request.url_root }}set-wind-power/" + power;
+        xhttp_stop.open("GET", url_address, true);
+        xhttp_stop.send();
+    }
 
+    function setActiveWind(power) {
+        let wind_power_id = "wind" + power;
+        let wind_power_element = document.getElementById(wind_power_id);
+        if (wind_power_id.length > 0) {
+            wind_power_element.checked = true;
+        }
+    }
+
+    stopPlaying();
+    setActiveWind({{ wind_power }});
 </script>

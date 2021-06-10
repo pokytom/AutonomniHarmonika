@@ -3,6 +3,8 @@ import serial
 #import pigpio
 from os import path
 
+WIND_POWER = 0
+
 
 def play_song(file):
 	# metoda pro prehrani pisne
@@ -44,6 +46,8 @@ def play_note(note_number):
 	return True
 
 def reset():
+	global WIND_POWER
+	WIND_POWER = 0
 	# metoda pro nulovani vystupu a vypnuti vzduchu
 	#ser = serial.Serial('/dev/ttyUSB0', 9600)
 	#print(ser.name, ser.baudrate)
@@ -70,3 +74,12 @@ def air_on():
 
 def lookup(i):
 	return i.to_bytes(1, 'big')#switcher.get(i,0)
+
+def set_wind_power(power):
+	global WIND_POWER
+	WIND_POWER = power
+	return
+
+def get_wind_power():
+	global WIND_POWER
+	return WIND_POWER

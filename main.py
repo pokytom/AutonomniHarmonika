@@ -1,11 +1,17 @@
 import os.path
 from flask import Flask, render_template, request, url_for, abort, send_from_directory
 from os import walk
-from komAMidi import play_song, play_note, reset, air_on
+from komAMidi import play_song, play_note, reset, air_on, set_wind_power, get_wind_power
 
 SONG_FOLDR = 'songs/'
 
 app = Flask(__name__)
+
+@app.route("/set-wind-power/<int:wind_power>", methods=['GET', 'POST'])
+def set_wind_power_fnc(wind_power):
+    print("set_wind: ", wind_power)
+    set_wind_power(wind_power)
+    return render_template('200.html')
 
 @app.route("/stop-playing", methods=['GET', 'POST'])
 def stop_playing():
@@ -40,7 +46,8 @@ def play_notes():
              53: "d",
              54: "e"}
     # prepne na stranku s klavesama
-    return render_template('notes_play.html', notes=notes)
+    wind_power = get_wind_power()
+    return render_template('notes_play.html', notes=notes, wind_power=wind_power)
 
 @app.route('/favicon.ico')
 def favicon():
@@ -55,8 +62,9 @@ def home():
     for i in range(len(f)-1):
         if f[i][-3:] != 'mid':
             f.pop(i)
+    wind_power = get_wind_power()
     return render_template('home.html',
-                           songs=f)
+                           songs=f, wind_power=wind_power)
 
 @app.route('/song/<string:song_name>', methods=['GET', 'POST'])
 def show_post(song_name):
