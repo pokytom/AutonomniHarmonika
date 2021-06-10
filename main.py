@@ -4,7 +4,7 @@ from os import walk
 from komAMidi import play_song, play_note, reset, air_on, set_wind_power, get_wind_power
 
 SONG_FOLDR = 'songs/'
-
+#rnd cmt
 app = Flask(__name__)
 
 @app.route("/set-wind-power/<int:wind_power>", methods=['GET', 'POST'])
