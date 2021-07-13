@@ -15,11 +15,21 @@
         </tr>
         {% for song_name in songs %}
             <tr>
+            <td><button onclick="deleteSong('{{ song_name }}')">Smazat</button></td>
                 <td><a onclick="playSong('{{ url_for(request.endpoint) }}song/{{ song_name }}')" style="cursor: pointer">{{ song_name }}</a></td>
             </tr>
         {% endfor %}
     </table>
 </div>
+<div>
+        <title>Nahrejte .mid skladbu</title>
+    <h1>Nahrejte .mid skladbu</h1>
+    <form method=post enctype=multipart/form-data>
+      <input type=file name=file>
+      <input type=submit value=Nahrát>
+    </form>
+</div>
+<br>
 <div id="waiting" class="hidden">
     <h1>Vaše píseň se právě přehrává.</h1>
 </div>
@@ -63,6 +73,22 @@
         xhttp.open("GET", song_path, true);
         xhttp.send();
         showWaiting();
+    }
+
+    function deleteSong(name) {
+        if (confirm("Opravdu chcete smazat skladbu: " + name + " trvale?")) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    location.reload();
+                }
+                if (this.status == 404 && this.readyState == 4) {
+                    alert("Soubor se nepovedlo smazat");
+                }
+            };
+            xhttp.open("DELETE", '/delete-song/'+'name', true);
+            xhttp.send();
+        }
     }
 
 

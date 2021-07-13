@@ -1,11 +1,21 @@
 import os.path
-from flask import Flask, render_template, request, url_for, abort, send_from_directory
-from os import walk
-from komAMidi import play_song, play_note, reset, air_on, set_wind_power, get_wind_power
+from flask import Flask, render_template, request, url_for, abort, send_from_directory, redirect, flash
+from os import walk, remove
+from komAMidi import play_song, play_note, reset, air_on, set_wind_power, get_wind_power, check_song_exist
+from werkzeug.utils import secure_filename
+
+
+UPLOAD_FOLDER = './songs/'
+ALLOWED_EXTENSIONS = {'mid'}
 
 SONG_FOLDR = 'songs/'
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route("/set-wind-power/<int:wind_power>", methods=['GET', 'POST'])
 def set_wind_power_fnc(wind_power):
@@ -13,7 +23,13 @@ def set_wind_power_fnc(wind_power):
     set_wind_power(wind_power)
     return render_template('200.html')
 
-
+@app.route("/delete-song/<name>", methods=['DELETE'])
+def delete_song(name):
+    if check_song_exist(name):
+        remove('{}{}'.format('./songs/', name))
+    else:
+        abort(404)
+    return render_template('200.html')
 
 @app.route("/stop-playing", methods=['GET', 'POST'])
 def stop_playing():
@@ -84,7 +100,21 @@ def favicon():
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    songy = ['prvni', 'druhy', 'treti']
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
     f = []
     for (dirpath, dirnames, filenames) in walk(SONG_FOLDR):
         f.extend(filenames)

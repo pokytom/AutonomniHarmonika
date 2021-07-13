@@ -89,3 +89,11 @@ def set_wind_power(power):
 def get_wind_power():
 	global WIND_POWER
 	return WIND_POWER
+
+def check_song_exist(name):
+	if not path.exists('{}{}'.format('./songs/', name)):
+		return False
+	return True
+
+
+
