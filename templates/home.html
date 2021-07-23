@@ -21,6 +21,11 @@
         {% endfor %}
     </table>
 </div>
+
+<br>
+<div id="waiting" class="hidden">
+    <h1>Vaše píseň se právě přehrává.</h1>
+</div>
 <div>
         <title>Nahrejte .mid skladbu</title>
     <h1>Nahrejte .mid skladbu</h1>
@@ -28,10 +33,6 @@
       <input type=file name=file>
       <input type=submit value=Nahrát>
     </form>
-</div>
-<br>
-<div id="waiting" class="hidden">
-    <h1>Vaše píseň se právě přehrává.</h1>
 </div>
 </body>
 
@@ -86,7 +87,7 @@
                     alert("Soubor se nepovedlo smazat");
                 }
             };
-            xhttp.open("DELETE", '/delete-song/'+'name', true);
+            xhttp.open("DELETE", '/delete-song/'+name, true);
             xhttp.send();
         }
     }
