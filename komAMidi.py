@@ -7,34 +7,64 @@ WIND_POWER = 0
 
 PLAYING_SONG = False
 
+def set_bit(value, bit):
+    return value | (1<<bit+1)
+
+def clear_bit(value, bit):
+    return value & ~(1<<bit+1)
+
+def check_bit_possitive(value, bit):
+    return value & (1 << bit+1)
+
+def find_byte(note):
+    return note // 7
+
+def find_bit_position(note):
+    return note % 7
+
 def play_song(file):
 	# metoda pro prehrani pisne
 	global PLAYING_SONG
 	PLAYING_SONG = True
-	pi = pigpio.pi()
-	pi.set_PWM_dutycycle(13,WIND_POWER)
+	#pi = pigpio.pi()
+	#pi.set_PWM_dutycycle(13,WIND_POWER)
 	f = open("komunikaceFile.txt", "w")
-	ser = serial.Serial('/dev/ttyUSB0',9600)
-	print(ser.name, ser.baudrate)
+	#ser = serial.Serial('/dev/ttyUSB0',9600)
+#	print(ser.name, ser.baudrate)
 	file_path = '{}{}'.format('./songs/', file)
 	if file[-3:] != 'mid' or not path.exists(file_path):
 		f.close()
-		ser.close
-		pi.set_PWM_dutycycle(13, 0)
+#		ser.close
+#		pi.set_PWM_dutycycle(13, 0)
 		return False
+	notes = [1, 0, 0, 0, 0]
+
 	for msg in MidiFile(file_path).play():
 		if PLAYING_SONG:
 			val = msg.dict()
 			if tuple(val.items())[0][1] != 'program_change' and tuple(val.items())[0][1] != 'control_change':
-				note = tuple(val.items())[3][1]
-				output_ser = lookup(note)
-				ser.write(output_ser)
+				note = tuple(val.items())[3][1]-53
+
+				byte = find_byte(note)
+				bit_possition = find_bit_position(note)
+				if check_bit_possitive(notes[byte], bit_possition):
+					notes[byte] = clear_bit(notes[byte], bit_possition)
+				else:
+					notes[byte] = set_bit(notes[byte], bit_possition)
+				output_ser = b''
+				print(lookup(note+53))
+				for i in range(5):
+					output_ser += lookup(notes[i])
+
+#				ser.write(output_ser)
+				listTestByteAsHex = [int(hex(x).split('x')[-1]) for x in output_ser]
+				print(listTestByteAsHex)
 				print(output_ser)
 		else:
 			break
-	ser.close()
+#	ser.close()
 	f.close()
-	pi.set_PWM_dutycycle(13, 0)
+#	pi.set_PWM_dutycycle(13, 0)
 	PLAYING_SONG = False
 
 	return True
