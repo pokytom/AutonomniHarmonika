@@ -92,10 +92,12 @@ def reset():
 	pi.set_PWM_dutycycle(13, 0)
 	print("vzduch vypnut")
 
-	output = b'r'
-	ser.write(output)
-	print(output)
+	notes = [1, 0, 0, 0, 0]
+	output_ser = b''
+	for i in range(5):
+		output_ser += lookup(notes[i])
 
+	ser.write(output_ser)
 	ser.close()
 	return True
 
