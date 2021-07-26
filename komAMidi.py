@@ -86,7 +86,6 @@ def reset():
 	PLAYING_SONG = False
 	# metoda pro nulovani vystupu a vypnuti vzduchu
 	ser = serial.Serial('/dev/ttyUSB0', 9600)
-	print(ser.name, ser.baudrate)
 
 	pi = pigpio.pi()
 	pi.set_PWM_dutycycle(13, 0)
@@ -98,6 +97,7 @@ def reset():
 		output_ser += lookup(notes[i])
 
 	ser.write(output_ser)
+	print(output_ser)
 	ser.close()
 	return True
 
