@@ -18,8 +18,10 @@
         function noteClick(id) {
             let field = document.getElementById("note-" + id);
             if (field.className == "noteActive") {
+                id = id-21;
                 field.className = "noteDeactive";
             } else if (field.className == "noteDeactive") {
+                id = id+11;
                 field.className = "noteActive";
             }
             var xhttp = new XMLHttpRequest();
