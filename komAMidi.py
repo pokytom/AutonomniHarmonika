@@ -71,6 +71,7 @@ def play_note(note_number):
 	else:
 		NOTES_ON -= 1
 	pi.set_PWM_dutycycle(13, calc_wind_power(NOTES_ON))
+	print(calc_wind_power(NOTES_ON))
 	output = lookup(note_number)
 	ser.write(output)
 	print(output)
