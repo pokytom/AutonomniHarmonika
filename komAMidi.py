@@ -4,12 +4,21 @@ import pigpio
 from os import path
 
 WIND_POWER = 0
+NOTES_ON = 0
 
 PLAYING_SONG = False
+
+def calc_wind_power(notes=0):
+	wd_power = WIND_POWER + notes * 0.5
+	if wd_power >= 15:
+		return 15
+	else:
+		return wd_power
 
 def play_song(file):
 	# metoda pro prehrani pisne
 	global PLAYING_SONG
+	notes_on = 0
 	PLAYING_SONG = True
 	pi = pigpio.pi()
 	pi.set_PWM_dutycycle(13,WIND_POWER)
@@ -32,13 +41,16 @@ def play_song(file):
 					output_ser = lookup(note-21)
 					ser.write(output_ser)
 					print(output_ser)
+					notes_on -= 1
 				#zapnuti noty
 				elif(tuple(val.items())[0][1] == 'note_on' and (53 <= note <=84)):
 					output_ser = lookup(note+11)
 					ser.write(output_ser)
 					print(output_ser)
+					notes_on += 1
 				else:
 					print("nota mimo rozsah!")
+				pi.set_PWM_dutycycle(13, calc_wind_power(notes_on))
 		else:
 			break
 	ser.close()
@@ -49,10 +61,15 @@ def play_song(file):
 	return True
 
 def play_note(note_number):
+	global NOTES_ON
 	# metoda pro zapnuti/vypnuti noty
 	ser = serial.Serial('/dev/ttyUSB0', 9600)
 	print(ser.name, ser.baudrate)
-
+	if note_number >= 64:
+		NOTES_ON += 1
+	else:
+		NOTES_ON -= 1
+	pi.set_PWM_dutycycle(13, calc_wind_power(NOTES_ON))
 	output = lookup(note_number)
 	ser.write(output)
 	print(output)
@@ -92,7 +109,14 @@ def lookup(i):
 
 def set_wind_power(power):
 	global WIND_POWER
-	WIND_POWER = power
+	if power == 1:
+		WIND_POWER = 5
+	elif power == 2:
+		WIND_POWER = 9
+	elif power == 3:
+		WIND_POWER = 15
+	else:
+		WIND_POWER = 0
 	return
 
 def get_wind_power():
