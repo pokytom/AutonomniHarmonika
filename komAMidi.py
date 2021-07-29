@@ -10,6 +10,8 @@ PLAYING_SONG = False
 
 def calc_wind_power(notes=0):
 	wd_power = WIND_POWER + notes * 0.5
+	if WIND_POWER == 0:
+		return 0
 	if wd_power >= 15:
 		return 15
 	else:
