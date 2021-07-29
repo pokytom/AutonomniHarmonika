@@ -65,6 +65,7 @@ def play_note(note_number):
 	# metoda pro zapnuti/vypnuti noty
 	ser = serial.Serial('/dev/ttyUSB0', 9600)
 	print(ser.name, ser.baudrate)
+	pi = pigpio.pi()
 	if note_number >= 64:
 		NOTES_ON += 1
 	else:
